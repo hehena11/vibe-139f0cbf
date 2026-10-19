@@ -1,0 +1,352 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>갓생곳간 | 나의 성장 기록</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <button class="logo page-button" data-page="home">
+        <span>🌾</span> 갓생곳간
+      </button>
+
+      <nav class="side-menu">
+        <button class="menu-button active page-button" data-page="home">🏠 <span>홈</span></button>
+        <button class="menu-button page-button" data-page="record">✍️ <span>오늘 기록</span></button>
+        <button class="menu-button page-button" data-page="calendar">🗓️ <span>캘린더</span></button>
+        <button class="menu-button page-button" data-page="routine">✅ <span>루틴 관리</span></button>
+      </nav>
+
+      <div class="user-card">
+        <div class="avatar">나</div>
+        <div>
+          <strong>성장하는 나</strong>
+          <small>오늘도 한 걸음</small>
+        </div>
+      </div>
+    </aside>
+
+    <main class="content">
+      <header class="mobile-header">
+        <button class="logo page-button" data-page="home">🌾 갓생곳간</button>
+        <span>🔔</span>
+      </header>
+
+      <!-- 홈 -->
+      <section id="home" class="page active">
+        <div class="title-row">
+          <div>
+            <p class="eyebrow" id="today-text">TODAY</p>
+            <h1>오늘도 성장 중인 나님 👋</h1>
+            <p class="description">하루 3분의 기록으로 나의 성장을 차곡차곡 쌓아보세요.</p>
+          </div>
+          <span class="bell">🔔</span>
+        </div>
+
+        <div class="goal-box">
+          <span class="goal-emoji">🎯</span>
+          <div class="goal-input-wrap">
+            <label for="daily-goal">오늘의 한 줄 목표</label>
+            <input id="daily-goal" type="text" placeholder="오늘 가장 중요한 일 하나를 적어보세요" />
+          </div>
+          <button id="save-goal-button" class="text-button">저장</button>
+        </div>
+
+        <div class="dashboard-grid">
+          <div>
+            <div class="section-title">
+              <div>
+                <h2>오늘의 루틴</h2>
+                <p>작은 실천을 체크해보세요.</p>
+              </div>
+              <button class="link-button page-button" data-page="routine">관리하기 →</button>
+            </div>
+
+            <div class="card routine-card">
+              <div id="home-routine-list"></div>
+              <div class="progress-area">
+                <div class="progress-info">
+                  <strong id="routine-count">0 / 0 완료</strong>
+                  <b id="routine-rate">0%</b>
+                </div>
+                <div class="bar"><div id="routine-bar" class="fill"></div></div>
+              </div>
+            </div>
+
+            <div class="section-title record-section">
+              <div>
+                <h2>오늘의 기록</h2>
+                <p>오늘을 나답게 정리해보세요.</p>
+              </div>
+            </div>
+
+            <div class="quick-grid">
+              <button class="quick-card sky page-button" data-page="record">
+                <span class="quick-icon">✍️</span>
+                <strong>오늘 한 일 기록하기</strong>
+                <small>감정과 KPT 회고를 남겨요</small>
+                <b>→</b>
+              </button>
+              <button class="quick-card violet" id="open-schedule-from-home">
+                <span class="quick-icon">📌</span>
+                <strong>일정 추가하기</strong>
+                <small>놓치고 싶지 않은 일을 적어요</small>
+                <b>→</b>
+              </button>
+              <button class="quick-card yellow page-button" data-page="record">
+                <span class="quick-icon">🌙</span>
+                <strong>하루 회고 작성하기</strong>
+                <small>오늘의 나를 다정하게 돌아봐요</small>
+                <b>→</b>
+              </button>
+            </div>
+          </div>
+
+          <div>
+            <div class="section-title">
+              <div>
+                <h2>오늘의 성장</h2>
+                <p>어제보다 한 걸음 더.</p>
+              </div>
+            </div>
+
+            <div class="card growth-card">
+              <h3>“작은 실천이 모여<br />더 나은 내가 돼요.”</h3>
+
+              <div class="growth-row">
+                <div><span>📝 기록 습관</span><b id="record-percent">0%</b></div>
+                <div class="bar"><div id="record-bar" class="fill"></div></div>
+              </div>
+
+              <div class="growth-row">
+                <div><span>✅ 루틴 실천도</span><b id="growth-routine-percent">0%</b></div>
+                <div class="bar"><div id="growth-routine-bar" class="fill green"></div></div>
+              </div>
+
+              <div class="growth-row">
+                <div><span>🌱 성장 활동</span><b id="activity-percent">0%</b></div>
+                <div class="bar"><div id="activity-bar" class="fill purple"></div></div>
+              </div>
+            </div>
+
+            <div class="cheer-card">
+              <span>✨</span>
+              <p id="cheer-message">오늘의 작은 기록이 내일의 큰 자신감이 될 거예요.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- 오늘 기록 -->
+      <section id="record" class="page">
+        <div class="title-row">
+          <div>
+            <p class="eyebrow">TODAY'S RECORD</p>
+            <h1>오늘 하루는 어땠나요?</h1>
+            <p class="description">완벽하지 않아도 괜찮아요. 있는 그대로 적어보세요.</p>
+          </div>
+          <button class="back-button page-button" data-page="home">← 홈으로</button>
+        </div>
+
+        <div class="record-layout">
+          <div class="card record-card">
+            <label class="field-label" for="work-input">오늘 한 일 <em>필수</em></label>
+            <textarea id="work-input" rows="4" placeholder="예: 프로젝트 기획서를 작성하고, 30분 동안 운동을 했어요."></textarea>
+
+            <div class="form-block">
+              <label class="field-label">오늘의 감정 <span>최대 3개까지 선택할 수 있어요.</span></label>
+              <div id="emotion-buttons" class="emotion-buttons"></div>
+              <div id="emotion-tags" class="emotion-tags"></div>
+            </div>
+
+            <div class="form-block">
+              <label class="field-label">KPT 회고 <span>오늘을 조금 더 선명하게 돌아봐요.</span></label>
+
+              <div class="kpt-item keep">
+                <label for="keep-input">Keep <small>계속 유지하고 싶은 것</small></label>
+                <textarea id="keep-input" rows="2" placeholder="예: 운동을 꾸준히 했다"></textarea>
+              </div>
+
+              <div class="kpt-item problem">
+                <label for="problem-input">Problem <small>아쉬웠던 점</small></label>
+                <textarea id="problem-input" rows="2" placeholder="예: 업무 우선순위가 부족했다"></textarea>
+              </div>
+
+              <div class="kpt-item try">
+                <label for="try-input">Try <small>내일 시도할 것</small></label>
+                <textarea id="try-input" rows="2" placeholder="예: 중요한 일을 먼저 정리한다"></textarea>
+              </div>
+            </div>
+
+            <button id="generate-diary-button" class="primary wide">✨ AI 일기 작성하기</button>
+          </div>
+
+          <aside class="tip-card">
+            <span>💡</span>
+            <h3>기록이 어려운 날에는</h3>
+            <p>“무엇을 했는지”, “어떤 기분이었는지”만 한 줄씩 적어도 충분해요.</p>
+            <p>갓생곳간이 당신의 하루를 따뜻한 글로 정리해 드릴게요.</p>
+          </aside>
+        </div>
+
+        <div id="diary-result" class="card diary-card hidden">
+          <div class="diary-title">
+            <div>
+              <p>AI가 정리한 오늘의 일기</p>
+              <h2 id="diary-date"></h2>
+            </div>
+            <span>✨ AI 작성</span>
+          </div>
+          <textarea id="diary-output" rows="11"></textarea>
+          <div class="diary-buttons">
+            <button id="regenerate-button" class="secondary">↻ 다시 작성하기</button>
+            <button id="save-diary-button" class="primary">일기 저장하기</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- 캘린더 -->
+      <section id="calendar" class="page">
+        <div class="title-row">
+          <div>
+            <p class="eyebrow">MY CALENDAR</p>
+            <h1>기록이 쌓인 시간</h1>
+            <p class="description">기록한 날을 돌아보며 나의 흐름을 확인해보세요.</p>
+          </div>
+          <button id="open-schedule-button" class="primary">+ 일정 추가</button>
+        </div>
+
+        <div class="calendar-layout">
+          <div class="card calendar-card">
+            <div class="calendar-top">
+              <button id="previous-month">‹</button>
+              <h2 id="calendar-month"></h2>
+              <button id="next-month">›</button>
+            </div>
+            <div class="weekdays">
+              <span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span>
+            </div>
+            <div id="calendar-days" class="calendar-days"></div>
+          </div>
+
+          <aside class="card date-card">
+            <p id="selected-date-label" class="eyebrow">SELECTED DATE</p>
+            <h2 id="selected-date-title"></h2>
+            <div id="schedule-list"></div>
+            <div id="calendar-diary-preview"></div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- 루틴 -->
+      <section id="routine" class="page">
+        <div class="title-row">
+          <div>
+            <p class="eyebrow">DAILY ROUTINES</p>
+            <h1>매일의 작은 실천</h1>
+            <p class="description">완벽함보다 꾸준함을 목표로 해요.</p>
+          </div>
+          <button id="open-routine-button" class="primary">+ 새 루틴 추가</button>
+        </div>
+
+        <div class="routine-notice">
+          <span>🌱</span>
+          <div>
+            <strong>루틴은 최대 10개까지 만들 수 있어요.</strong>
+            <p>오늘 할 수 있는 작고 구체적인 행동부터 시작해보세요.</p>
+          </div>
+        </div>
+
+        <div id="routine-manage-list" class="manage-list"></div>
+      </section>
+    </main>
+
+    <nav class="mobile-nav">
+      <button class="page-button active" data-page="home">🏠<small>홈</small></button>
+      <button class="page-button" data-page="calendar">🗓️<small>캘린더</small></button>
+      <button class="page-button" data-page="record">✍️<small>기록</small></button>
+      <button class="page-button" data-page="routine">✅<small>루틴</small></button>
+    </nav>
+  </div>
+
+  <!-- 루틴 모달 -->
+  <div id="routine-modal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2 id="routine-modal-title">새 루틴 추가</h2>
+        <button class="close-modal" data-modal="routine-modal">✕</button>
+      </div>
+
+      <input id="routine-id" type="hidden" />
+
+      <label class="modal-label" for="routine-name">루틴 이름 <em>필수</em></label>
+      <input id="routine-name" type="text" placeholder="예: 운동 30분" />
+
+      <label class="modal-label" for="routine-category">카테고리</label>
+      <select id="routine-category">
+        <option value="건강">건강</option>
+        <option value="공부">공부</option>
+        <option value="업무">업무</option>
+        <option value="생활">생활</option>
+        <option value="취미">취미</option>
+        <option value="마음관리">마음관리</option>
+      </select>
+
+      <label class="modal-label">반복 요일</label>
+      <div id="day-selector" class="day-selector">
+        <button data-day="0">일</button>
+        <button data-day="1">월</button>
+        <button data-day="2">화</button>
+        <button data-day="3">수</button>
+        <button data-day="4">목</button>
+        <button data-day="5">금</button>
+        <button data-day="6">토</button>
+      </div>
+
+      <label class="modal-label" for="routine-target">목표 시간 또는 수량 <span>(선택)</span></label>
+      <input id="routine-target" type="text" placeholder="예: 30분, 2L, 10페이지" />
+
+      <button id="save-routine-button" class="primary wide">루틴 저장하기</button>
+    </div>
+  </div>
+
+  <!-- 일정 모달 -->
+  <div id="schedule-modal" class="modal hidden">
+    <div class="modal-box">
+      <div class="modal-header">
+        <h2>일정 추가</h2>
+        <button class="close-modal" data-modal="schedule-modal">✕</button>
+      </div>
+
+      <label class="modal-label" for="schedule-name">일정 이름 <em>필수</em></label>
+      <input id="schedule-name" type="text" placeholder="예: 프로젝트 회의" />
+
+      <label class="modal-label" for="schedule-date">날짜</label>
+      <input id="schedule-date" type="date" />
+
+      <label class="modal-label" for="schedule-time">시간 <span>(선택)</span></label>
+      <input id="schedule-time" type="time" />
+
+      <label class="modal-label" for="schedule-category">카테고리</label>
+      <select id="schedule-category">
+        <option value="업무">업무</option>
+        <option value="공부">공부</option>
+        <option value="운동">운동</option>
+        <option value="독서">독서</option>
+        <option value="약속">약속</option>
+        <option value="취미">취미</option>
+        <option value="휴식">휴식</option>
+        <option value="기타">기타</option>
+      </select>
+
+      <button id="save-schedule-button" class="primary wide">일정 저장하기</button>
+    </div>
+  </div>
+
+  <div id="toast"></div>
+  <script src="script.js"></script>
+</body>
+</html>
